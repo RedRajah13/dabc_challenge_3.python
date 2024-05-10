@@ -35,15 +35,31 @@ with open(CSV_PATH, encoding='UTF-8') as csvfile:
         else:
             candidate_votes[current_candidate] = 1
 
-    # percentage of votes/candidate
-    for key in candidate_votes:
-        perc_votes = total_votes / candidate_votes[current_candidate]
-        print(perc_votes)
+    # winner (learned from Xpert)
+    max_key = max(candidate_votes, key=lambda k: candidate_votes[k])
+    max_votes = max(candidate_votes.values())
 
-# winner
-
+    # percentage of votes/candidate + analysis
     print("Election Results \n ---------------")
     print(f"Total number of votes: {total_votes} \n ---------------")            
     for current_candidate in candidate_votes:
-        print("{} = {}".format(current_candidate, candidate_votes[current_candidate]))
-  
+        perc_num = candidate_votes[current_candidate] / total_votes
+        perc_votes = "{:.3%}".format(perc_num)
+        print("{}: {} ({})".format(current_candidate, perc_votes, candidate_votes[current_candidate]))
+    print(f"--------------- \nWinner: {max_key} \n ---------------")
+
+
+
+    analysis = f"""Election Results 
+    ---------------
+    Total number of votes: 369711
+    ---------------
+    Charles Casper Stockham: 23.049% (85213)
+    Diana DeGette: 73.812% (272892)
+    Raymon Anthony Doane: 3.139% (11606)
+    ---------------
+    Winner: Diana DeGette
+    ---------------"""
+
+with(open("PyPoll.main.txt", "w") as f):
+    f.write(analysis)

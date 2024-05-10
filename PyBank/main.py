@@ -47,6 +47,7 @@ with open(csvpath, encoding='UTF-8') as csvfile:
 
     # average of monthly changes
     avg_change = int(sum(net_changes) / len(net_changes))
+    avg_change = "{:.2f}".format(avg_change)
     print(f"Average monthly change: ${avg_change}")
 
     # greatest increase in profits (date + amt)
@@ -62,3 +63,15 @@ with open(csvpath, encoding='UTF-8') as csvfile:
     min_month = date_col[min_month_indx]
 
     print(f"Greatest decrease in profits: {min_month}: ${min_change}")
+
+    analysis = f"""Financial Analysis
+    ---------------
+    Total number of months: {month_count}
+    Total profit: ${total_profit}
+    Average monthly change: ${avg_change}
+    Greatest increase in profits: {max_month}: ${max_change}
+    Greatest decrease in profits: {min_month}: ${min_change}
+    """
+
+    with(open("PyBank.main.txt", 'w') as f):
+        f.write(analysis)
